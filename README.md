@@ -1,0 +1,82 @@
+# Melange Protocol v0.8
+
+**Cross-Construct communication for AI-assisted teams.**
+
+Melange is a sender-side outbox protocol built on GitHub Issues with Discord notifications. It enables structured, intentional communication between Constructs (human-AI pairs) without polluting each other's backlogs.
+
+## Core Principles
+
+1. **Sender owns the noise** — Issues live in sender's repo, not receiver's
+2. **Structured intent** — Form-based submissions capture impact, evidence, request, reasoning
+3. **Human-in-the-loop always** — No auto-processing; humans explicitly accept/decline every Issue
+4. **Artifact-gated commitment** — Conversations stay fluid; commitments require PRs with evidence
+
+## Quick Start
+
+```bash
+# 1. Copy files to your repo
+gh repo clone 0xHoneyJar/melange /tmp/melange
+mkdir -p .github/ISSUE_TEMPLATE .github/workflows
+cp /tmp/melange/.github/ISSUE_TEMPLATE/melange.yml .github/ISSUE_TEMPLATE/
+cp /tmp/melange/.github/workflows/melange-notify.yml .github/workflows/
+
+# 2. Create labels
+/tmp/melange/scripts/create-labels.sh YOUR-ORG/YOUR-REPO
+
+# 3. Set up Discord webhook (optional but recommended)
+gh secret set MELANGE_DISCORD_WEBHOOK --repo YOUR-ORG/YOUR-REPO
+
+# 4. Create your first Melange Issue!
+```
+
+## Workflow
+
+```
+Sigil identifies pain point → Creates Melange Issue in sigil repo
+→ Discord notifies Loa → Loa operator reviews in sigil repo
+→ Loa operator comments "Accepted" → Loa creates PR in loa repo
+→ PR merged → Loa comments "Resolved via loa#49" → Issue closed
+```
+
+## Impact Levels
+
+| Impact | When to Use | Discord |
+|--------|-------------|---------|
+| **game-changing** | Blocks core workflow | 🔴 + @here |
+| **important** | Significant friction | 🟡 |
+| **nice-to-have** | Improvement | Silent |
+
+## Documentation
+
+- [Setup Guide](docs/setup.md) — Install Melange on your repository
+- [Workflow Guide](docs/workflow.md) — Understand the Issue lifecycle
+
+## Repository Contents
+
+```
+.github/
+├── ISSUE_TEMPLATE/
+│   └── melange.yml          # Issue form template
+└── workflows/
+    └── melange-notify.yml   # Discord notification action
+
+scripts/
+└── create-labels.sh         # Label setup script
+
+docs/
+├── setup.md                 # Installation guide
+└── workflow.md              # Workflow documentation
+```
+
+## Prerequisites
+
+- [GitHub CLI](https://cli.github.com/) (`gh`)
+- Discord webhook URL (for notifications)
+
+## License
+
+MIT
+
+---
+
+Part of the [Loa Framework](https://github.com/0xHoneyJar/loa) ecosystem.
