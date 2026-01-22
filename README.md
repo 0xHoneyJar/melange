@@ -1,15 +1,40 @@
-# Melange Protocol v0.8
+# Melange Protocol v0.9
 
-**Cross-Construct communication for AI-assisted teams.**
+**Structured feedback loops for AI-assisted teams.**
 
-Melange is a sender-side outbox protocol built on GitHub Issues with Discord notifications. It enables structured, intentional communication between Constructs (human-AI pairs) without polluting each other's backlogs.
+## The Problem
+
+When multiple human-AI teams ("Constructs") work in the same org, feedback gets messy:
+- Issues pile up in the wrong repos
+- Urgent requests get lost in noise
+- No clear signal of intent or impact
+- AI agents auto-process without human judgment
+
+## The Solution
+
+Melange is a **sender-side outbox protocol**. When you have feedback for another team:
+
+1. **You create the Issue in YOUR repo** (not theirs)
+2. **Discord notifies them** with structured context
+3. **They review and respond** in your Issue thread
+4. **Resolution requires artifacts** (PRs with evidence)
+
+This keeps backlogs clean while enabling tight feedback loops.
+
+## What's a Construct?
+
+A **Construct** is a human-AI pair working as a unit. Examples:
+- `soju@Sigil` — soju (human) + Sigil AI agent
+- `jani@Loa` — jani (human) + Loa AI agent
+
+Melange enables Constructs to communicate with clear intent and human oversight.
 
 ## Core Principles
 
 1. **Sender owns the noise** — Issues live in sender's repo, not receiver's
-2. **Structured intent** — Form-based submissions capture impact, evidence, request, reasoning
-3. **Human-in-the-loop always** — No auto-processing; humans explicitly accept/decline every Issue
-4. **Artifact-gated commitment** — Conversations stay fluid; commitments require PRs with evidence
+2. **Structured intent** — Form captures impact, evidence, request, reasoning
+3. **Human-in-the-loop always** — No auto-processing; humans accept/decline every Issue
+4. **Artifact-gated commitment** — Conversations stay fluid; commitments require PRs
 
 ## Quick Start
 
@@ -42,9 +67,27 @@ Sigil identifies pain point → Creates Melange Issue in sigil repo
 
 | Impact | When to Use | Discord |
 |--------|-------------|---------|
-| **game-changing** | Blocks core workflow | 🔴 + @here |
-| **important** | Significant friction | 🟡 |
-| **nice-to-have** | Improvement | Silent |
+| **game-changing** | Blocks core workflow | 🔴 Red embed + @here ping |
+| **important** | Significant friction | 🟡 Yellow embed |
+| **nice-to-have** | Improvement idea | Silent (GitHub search only) |
+
+### Discord Notification Preview
+
+```
+┌─────────────────────────────────────────────┐
+│ 🟡 Request: Improve error messages          │
+├─────────────────────────────────────────────┤
+│ From: soju@Sigil    To: loa    Intent: ask  │
+├─────────────────────────────────────────────┤
+│ Experience                                  │
+│ Error messages don't include context...     │
+├─────────────────────────────────────────────┤
+│ Request                                     │
+│ Add file path and line number to errors     │
+├─────────────────────────────────────────────┤
+│ Melange Protocol • sigil#42    Jan 22, 2026 │
+└─────────────────────────────────────────────┘
+```
 
 ## Documentation
 
