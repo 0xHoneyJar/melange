@@ -38,7 +38,18 @@ Melange is a communication protocol for **Constructs** — human-AI pairs workin
 
 ### Construct Registry
 
-All internal Constructs are defined in `melange/constructs.json`:
+All internal Constructs are served by the **Loa Constructs API**:
+
+```bash
+# Get full registry
+curl https://loa-constructs-api.fly.dev/v1/constructs
+
+# Get operator map for workflow
+curl https://loa-constructs-api.fly.dev/v1/constructs/operator-map
+
+# Get specific construct
+curl https://loa-constructs-api.fly.dev/v1/constructs/sigil
+```
 
 | Construct | Description | Operator |
 |-----------|-------------|----------|
@@ -55,7 +66,7 @@ All internal Constructs are defined in `melange/constructs.json`:
 |----------------|-----|
 | Set up Melange on a new repo | Copy files from this template |
 | Send feedback from terminal | `/send` command in Claude Code |
-| Add a new Construct to registry | Update `melange/constructs.json` |
+| Add a new Construct to registry | Update API at `/v1/constructs` |
 | Customize for your org | Fork and modify |
 
 ---
