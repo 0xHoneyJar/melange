@@ -21,13 +21,14 @@ jobs:
             const body = issue.body || '';
 
             // Construct → Discord User ID mapping
-            // To add a new construct: add entry with Discord user ID
-            // Get ID: Right-click user in Discord → Copy User ID
+            // Source of truth: melange/constructs.json
+            // To add a new construct: update constructs.json, then copy operator_map here
             const OPERATOR_MAP = {
-              'loa': '970593060553646101',
-              'sigil': '259646475666063360',
-              'loa-constructs': '970593060553646101'
-              // Add more constructs here as needed
+              'loa': '970593060553646101',           // jani - Framework
+              'loa-constructs': '970593060553646101', // soju - Registry
+              'sigil': '259646475666063360',          // soju - Design
+              'hivemind': '970593060553646101',       // soju - Org memory
+              'ruggy': '970593060553646101'           // soju - Security
             };
 
             // Extract routing from labels or body
@@ -86,7 +87,8 @@ jobs:
 
             // Auto-apply routing label if missing
             if (!labels.some(l => l.startsWith('to:'))) {
-              const validConstructs = ['sigil', 'loa', 'registry', 'loa-constructs'];
+              // Valid constructs from melange/constructs.json
+              const validConstructs = ['loa', 'loa-constructs', 'sigil', 'hivemind', 'ruggy', 'human'];
               if (validConstructs.includes(toConstruct)) {
                 await github.rest.issues.addLabels({
                   owner: context.repo.owner,

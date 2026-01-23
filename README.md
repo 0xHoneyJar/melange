@@ -8,60 +8,55 @@ Melange is a communication protocol for **Constructs** — human-AI pairs workin
 
 ## The Ecosystem
 
-Melange exists across three layers:
-
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                          MELANGE ECOSYSTEM                           │
-├─────────────────────────────────────────────────────────────────────┤
+│                              LOA                                     │
+│                      (Mother Framework)                              │
+│                   github.com/0xHoneyJar/loa                         │
+└───────────────────────────┬─────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                        LOA CONSTRUCTS                                │
+│                    (Central Registry & API)                          │
+│               github.com/0xHoneyJar/loa-constructs                  │
 │                                                                      │
-│   ┌──────────────────────────────────────────────────────────────┐  │
-│   │  LAYER 1: Protocol (this repo)                               │  │
-│   │  github.com/0xHoneyJar/melange                               │  │
-│   │                                                               │  │
-│   │  • Issue form template (.github/ISSUE_TEMPLATE/melange.yml)  │  │
-│   │  • GitHub Action (melange-notify.yml, melange-resolve.yml)   │  │
-│   │  • Label setup script (scripts/create-labels.sh)             │  │
-│   │  • Documentation (docs/)                                      │  │
-│   │                                                               │  │
-│   │  Purpose: Language-agnostic template. Fork and customize.    │  │
-│   └──────────────────────────────────────────────────────────────┘  │
-│                              ↓ distributed to                        │
-│   ┌──────────────────────────────────────────────────────────────┐  │
-│   │  LAYER 2: Construct Repos (sigil, loa, registry, etc.)       │  │
-│   │                                                               │  │
-│   │  • Copied: .github/ISSUE_TEMPLATE/melange.yml                │  │
-│   │  • Copied: .github/workflows/melange-notify.yml              │  │
-│   │  • Copied: .github/workflows/melange-resolve.yml             │  │
-│   │  • Created: Labels via create-labels.sh                       │  │
-│   │  • Set: MELANGE_DISCORD_WEBHOOK secret                        │  │
-│   │                                                               │  │
-│   │  Purpose: Each Construct can send/receive Melange Issues.    │  │
-│   └──────────────────────────────────────────────────────────────┘  │
-│                              ↓ wrapped by                            │
-│   ┌──────────────────────────────────────────────────────────────┐  │
-│   │  LAYER 3: Loa Framework (loa-constructs)                     │  │
-│   │  github.com/0xHoneyJar/loa-constructs                        │  │
-│   │                                                               │  │
-│   │  • /send command — Create Melange Issues via CLI             │  │
-│   │  • /inbox command — Triage incoming Issues                   │  │
-│   │  • /threads command — Dashboard of all activity              │  │
-│   │  • Local thread cache (grimoires/loa/melange/threads.json)   │  │
-│   │                                                               │  │
-│   │  Purpose: Claude Code integration. AI-assisted CLI.          │  │
-│   └──────────────────────────────────────────────────────────────┘  │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+│   • Skills marketplace (constructs.network)                         │
+│   • Melange Protocol integration                                    │
+│   • /send, /inbox, /threads CLI commands                            │
+│   • Construct registry (melange/constructs.json)                    │
+└───────────────────────────┬─────────────────────────────────────────┘
+                            │
+            ┌───────────────┼───────────────┬───────────────┐
+            ▼               ▼               ▼               ▼
+     ┌───────────┐   ┌───────────┐   ┌───────────┐   ┌───────────┐
+     │   Sigil   │   │  Hivemind │   │   Ruggy   │   │    ...    │
+     │  (Design) │   │(Org Docs) │   │(Security) │   │           │
+     └───────────┘   └───────────┘   └───────────┘   └───────────┘
+         Loa-powered Constructs (instances using the framework)
 ```
+
+### Construct Registry
+
+All internal Constructs are defined in `melange/constructs.json`:
+
+| Construct | Description | Operator |
+|-----------|-------------|----------|
+| **loa** | Mother framework | jani |
+| **loa-constructs** | Registry & API | soju |
+| **sigil** | Design physics | soju |
+| **hivemind** | Org memory | soju |
+| **ruggy** | Security auditing | soju |
+| **human** | Virtual: escalate to operator | (sender's config) |
 
 ### Which Layer Do I Use?
 
 | You want to... | Use |
 |----------------|-----|
-| Set up Melange on a new repo | **Layer 1** — Copy files from this template |
-| Send feedback from terminal | **Layer 3** — Use `/send` command in Claude Code |
-| Understand the protocol | **Layer 1** — Read `docs/workflow.md` |
-| Customize for your org | **Layer 1** — Fork and modify |
+| Set up Melange on a new repo | Copy files from this template |
+| Send feedback from terminal | `/send` command in Claude Code |
+| Add a new Construct to registry | Update `melange/constructs.json` |
+| Customize for your org | Fork and modify |
 
 ---
 
